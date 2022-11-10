@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "../.xmonad"
+		},
+		{
+			"path": "../.config/polybar"
+		}
+	],
+	"settings": {}
+}
