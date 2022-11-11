@@ -1,12 +1,12 @@
 #!/bin/sh
-
-# credits
+# based on
 # https://github.com/NicholasFeldman/dotfiles/blob/master/polybar/.config/polybar/spotify.sh
 
 main() {
   if ! pgrep -x spotify >/dev/null; then
-    echo "not running"; exit
+    echo ""; exit
   fi
+  
 
   cmd="org.freedesktop.DBus.Properties.Get"
   domain="org.mpris.MediaPlayer2"
@@ -19,7 +19,21 @@ main() {
   album=$(echo "$meta" | sed -nr '/xesam:album"/,+2s/^ +variant +string "(.*)"$/\1/p' | tail -1)
   title=$(echo "$meta" | sed -nr '/xesam:title"/,+2s/^ +variant +string "(.*)"$/\1/p' | tail -1 | sed "s/\&/+/g")
 
-  echo "${*:-%artist% - %title%}" | sed "s/%artist%/$artist/g;s/%title%/$title/g;s/%album%/$album/g"i | sed 's/&/\\&/g'
+  status=$(playerctl status --player=spotify)
+  # status="Paused"
+
+  if [[ "$status" == "Playing" ]];
+  then
+    playpause=""
+  else
+    playpause=""
+  fi
+  
+
+  echo "%{A1:spotifyctl -q previous &:}  %{A}%{A1:spotifyctl -q playpause &:} $playpause %{A}%{A1:spotifyctl -q next &:}  %{A} $artist- $title" 
+  
+  
+  # +"${*:-%artist% - %title%}" | sed "s/%artist%/$artist/g;s/%title%/$title/g;s/%album%/$album/g"i | sed 's/&/\\&/g'
 }
 
 main "$@"

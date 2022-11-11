@@ -128,7 +128,7 @@ font-4 = "FontAwesome5Brands:size=13;0"
 
 modules-left = ewmh title-xmonad
 modules-center = date
-modules-right = spotify1 updates pavolume battery 
+modules-right = spotify1 updates pavolume battery
 
 tray-detached = false
 tray-offset-x = 0
@@ -938,7 +938,8 @@ format-underline = #0f0
 format-prefix = "  "
 format-prefix-foreground = #0f0
 label = %output:0:150%
-click-left = "spotifyctl -q playpause"
+click-left = spotify
+;  
 
 ################################################################################
 
