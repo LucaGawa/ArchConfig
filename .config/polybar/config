@@ -141,21 +141,24 @@ tray-scale = 1.0
 tray-position = right
 tray-background = ${colors.background}
 
-[bar/mainbar-xmonad1]
+[bar/mainbar-xmonad-DP-2]
+inherit = bar/mainbar-xmonad
+
+[bar/mainbar-xmonad-HDMI-1]
 inherit = bar/mainbar-xmonad
 
 modules-left = ewmh1 
 modules-center = xwindow
 modules-right = 
 
-[bar/mainbar-xmonad2]
+[bar/mainbar-xmonad-HDMI-2]
 inherit = bar/mainbar-xmonad
 
 modules-left = ewmh2 
 modules-center = xwindow
-modules-right = 
+modules-right = spotify1
 
-[bar/mainbar-xmonad3]
+[bar/mainbar-xmonad-DP-1]
 inherit = bar/mainbar-xmonad
 
 modules-left = ewmh3 

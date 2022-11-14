@@ -19,21 +19,22 @@ count=$(xrandr --query | grep " connected" | cut -d" " -f1 | wc -l)
 case $desktop in
 
     xmonad|/usr/share/xsessions/xmonad)
-    # if [ $count = 1 ]; then
-    #   m=$(xrandr --query | grep " connected" | cut -d" " -f1)
-    #   MONITOR=$m polybar --reload mainbar-xmonad -c ~/.config/polybar/config &
-    # else
-    #   for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-    #     MONITOR=$m polybar --reload mainbar-xmonad -c ~/.config/polybar/config &
-    #   done
-    # fi
-    MONITOR=DP-2 polybar --reload mainbar-xmonad -c ~/.config/polybar/config &
+    if [ $count = 1 ]; then
+      m=$(xrandr --query | grep " connected" | cut -d" " -f1)
+      MONITOR=$m polybar --reload mainbar-xmonad -c ~/.config/polybar/config &
+    else
+      for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
+        MONITOR=$m polybar --reload mainbar-xmonad-$m -c ~/.config/polybar/config &
+      done
+    fi
 
-    MONITOR=HDMI-1 polybar --reload mainbar-xmonad1 -c ~/.config/polybar/config &
+    # MONITOR=DP-2 polybar --reload mainbar-xmonad -c ~/.config/polybar/config &
 
-    MONITOR=HDMI-2 polybar --reload mainbar-xmonad2 -c ~/.config/polybar/config &
+    # MONITOR=HDMI-1 polybar --reload mainbar-xmonad1 -c ~/.config/polybar/config &
+
+    # MONITOR=HDMI-2 polybar --reload mainbar-xmonad2 -c ~/.config/polybar/config &
           
-    MONITOR=DP-1 polybar --reload mainbar-xmonad3 -c ~/.config/polybar/config &
+    # MONITOR=DP-1 polybar --reload mainbar-xmonad3 -c ~/.config/polybar/config &
 
     # second polybar at bottom
      if [ $count = 1 ]; then
