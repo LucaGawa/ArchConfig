@@ -97,7 +97,7 @@ myManageHook = composeAll . concat $
     ]
     where
     --doShiftAndGo = doF . liftM2 (.) W.greedyView W.shift
-    myCFloats = ["Arandr", "Arcolinux-calamares-tool.py", "Archlinux-tweak-tool.py", "Arcolinux-welcome-app.py", "Galculator", "feh", "mpv", "Xfce4-terminal", "Xfce4-appfinder", "Xfce4-settings-manager", "Pavucontrol"]
+    myCFloats = ["Arandr", "Arcolinux-calamares-tool.py", "Archlinux-tweak-tool.py", "Arcolinux-welcome-app.py", "Galculator", "feh", "mpv", "Xfce4-terminal", "Xfce4-appfinder", "Xfce4-settings-manager", "Pavucontrol", "Archlinux-logout.py"] --todo set logout size to fullscreen
     myTFloats = ["Downloads", "Save As..."]
     myRFloats = []
     myIgnores = ["desktop_window"]
@@ -150,9 +150,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_c), spawn $ "conky-toggle" )
   , ((modMask, xK_f), sendMessage $ Toggle NBFULL) --todo same key than toggle polybar
   , ((modMask, xK_b), spawn "polybar-msg cmd toggle")
-  , ((modMask, xK_h), spawn $ "urxvt 'htop task manager' -e htop" )
+--   , ((modMask, xK_h), spawn $ "urxvt 'htop task manager' -e htop" )
   , ((mod1Mask, xK_F4), kill )
-  , ((modMask, xK_v), spawn $ "pavucontrol" )
+--   , ((modMask, xK_v), spawn $ "pavucontrol" )
   , ((modMask, xK_x), spawn $ "archlinux-logout" )
   , ((modMask, xK_Escape), spawn $ "xkill" )
   , ((modMask, xK_Return), spawn $ "alacritty" ) 
