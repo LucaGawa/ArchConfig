@@ -127,11 +127,11 @@ font-3 = "Noto Sans Mono:size=10;0"
 font-4 = "FontAwesome5Brands:size=13;0"
 font-5 = "FontAwesome:size=10;0"
 
-modules-left = ewmh xwindow
+modules-left = ewmh0 xwindow 
 modules-center = date
-modules-right = updates pavolume battery system-bluetooth-bluetoothctl bluetooth weather wireless-network xbacklight
+modules-right = updates pavolume battery bluetooth weather keyboard-layout wireless-network xbacklight
 
-tray-detached = false
+tray-detached = true
 tray-offset-x = 0
 tray-offset-y = 0
 tray-padding = 2
@@ -140,10 +140,26 @@ tray-scale = 1.0
 tray-position = right
 tray-background = ${colors.background}
 
-click-right = code /home/luca/.vscode/scripts.arch_config.code-workspace &
+[bar/mainbar-xmonad1]
+inherit = bar/mainbar-xmonad
 
-click-left = exec ~/.config/polybar/scripts/change_layout.sh 
+modules-left = ewmh1 
+modules-center = xwindow
+modules-right = 
 
+[bar/mainbar-xmonad2]
+inherit = bar/mainbar-xmonad
+
+modules-left = ewmh2 
+modules-center = xwindow
+modules-right = 
+
+[bar/mainbar-xmonad3]
+inherit = bar/mainbar-xmonad
+
+modules-left = ewmh3 
+modules-center = xwindow
+modules-right = 
 
 ################################################################################
 ################################################################################
@@ -187,6 +203,7 @@ module-margin-right = 3
 ; Enable support for inter-process messaging
 ; See the Messaging wiki page for more details.
 enable-ipc = true
+click-right = code /home/luca/.vscode/scripts.arch_config.code-workspace &
 
 ;https://github.com/jaagr/polybar/wiki/Fonts
 ; 
@@ -198,7 +215,7 @@ font-4 = "FontAwesome5Brands:size=13;0"
 font-5 = "Nerd Font:pixelsize=10;0"
 ; font-0 = "SauceCodePro Nerd Font:pixelsize=10;1"
 
-modules-left = spotify1 xkeyboard 
+modules-left = spotify1 xworkspaces
 modules-center = networkspeeddown pub-ip networkspeedup
 modules-right = filesystem memory3 cpu2 temperature2
 
@@ -221,7 +238,7 @@ modules-right = filesystem memory3 cpu2 temperature2
 [module/updates]
 type = custom/script
 exec = ~/.config/polybar/scripts/check-updates.sh
-interval = 1000
+interval = 10
 label = %output%
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
@@ -230,15 +247,15 @@ format-prefix-foreground = #FFBB00
 format-underline = #FFBB00
 ################################################################################
 
-[module/bluetooth]
-type = custom/script
-exec = ~/.config/polybar/scripts/bluetooth.sh
-interval = 2
-click-left = exec blueberry
-click-right = exec ~/.config/polybar/scripts/toggle_bluetooth.sh
-format-padding = 1
-format-background = #000000
-format-foreground = #ffffff
+; [module/bluetooth]
+; type = custom/script
+; exec = ~/.config/polybar/scripts/bluetooth.sh
+; interval = 2
+; click-left = exec blueberry
+; click-right = exec ~/.config/polybar/scripts/toggle_bluetooth.sh
+; format-padding = 1
+; format-background = #000000
+; format-foreground = #ffffff
 
 ;[module/wireless-network]
 ;type = internal/network
@@ -256,22 +273,6 @@ format-foreground = #ffffff
 ; label-disconnected-background = ${colors.bg}
 ; label-disconnected-foreground = ${colors.red}
 ; label-disconnected-padding = 1
-
-################################################################################
-
-[module/workspaces-xmonad]
-type = custom/script
-exec = tail -F /tmp/.xmonad-workspace-log
-exec-if = [ -p /tmp/.xmonad-workspace-log ]
-tail = true
-
-[module/title-xmonad]
-type = custom/script
-exec = tail -F /tmp/.xmonad-title-log
-exec-if = [ -p /tmp/.xmonad-title-log ]
-tail = true
-
-
 
 ################################################################################
 
@@ -488,88 +489,103 @@ format-prefix = ""
 
 #################################################################
 
+
 [module/ewmh]
 type = internal/xworkspaces
 
-pin-workspaces = false
+pin-workspaces = true
 enable-click = true
 enable-scroll = true
 reverse-scroll = true
 
-icon-0 = 1;
-icon-1 = 2;
-icon-2 = 3;
-icon-3 = 4;
-icon-4 = 5;
-#icon-5 = 6;
-format = <label-state>
+index-sort = true
+
+
 label-monitor = %name%
 
-label-active = %name%
+
+label-active = %icon% 
 label-active-foreground = ${colors.foreground-active}
 label-active-background = ${colors.background}
 label-active-underline= #6790eb
 label-active-padding = 2
 
-label-occupied = %name%
+
+label-occupied = %icon%
 label-occupied-foreground = ${colors.occupied-active}
 label-occupied-background = ${colors.background}
 label-occupied-padding = 2
 
-label-urgent = %name%
+label-urgent = %icon%
 label-urgent-foreground = ${colors.foreground}
 label-urgent-background = ${colors.alert}
 label-urgent-underline = ${colors.alert}
 label-urgent-padding = 2
 
-label-empty = %name%
+label-empty = %icon%
 label-empty-foreground = ${colors.foreground}
 label-empty-padding = 2
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 
+[module/ewmh0]
+inherit = module/ewmh
 
-#################################################################
+; label-monitor = %name%
+; format = <label-state> <label-monitor>
 
-[module/ewmh-noscroll]
-type = internal/xworkspaces
+icon-0 = 0_1;1
+icon-1 = 0_2;2
+icon-2 = 0_3;3
+icon-3 = 0_4;4
+icon-4 = 0_5;5
+icon-5 = 0_6;6
+icon-6 = 0_7;7
+icon-7 = 0_8;8
+icon-8 = 0_9;9
+icon-9 = 0_10;10
 
-pin-workspaces = false
-enable-click = true
-enable-scroll = false
-reverse-scroll = false
+[module/ewmh1]
+inherit = module/ewmh
 
-icon-0 = 1;
-icon-1 = 2;
-icon-2 = 3;
-icon-3 = 4;
-icon-4 = 5;
-#icon-5 = 6;
-format = <label-state>
-label-monitor = %name%
+icon-0 = 1_1;1
+icon-1 = 1_2;2
+icon-2 = 1_3;3
+icon-3 = 1_4;4
+icon-4 = 1_5;5
+icon-5 = 1_6;6
+icon-6 = 1_7;7
+icon-7 = 1_8;8
+icon-8 = 1_9;9
+icon-9 = 1_10;10
 
-label-active = %name%
-label-active-foreground = ${colors.foreground-active}
-label-active-background = ${colors.background}
-label-active-underline= #6790eb
-label-active-padding = 2
+[module/ewmh2]
+inherit = module/ewmh
 
-label-occupied = %name%
-label-occupied-foreground = ${colors.occupied-active}
-label-occupied-background = ${colors.background}
-label-occupied-padding = 2
+icon-0 = 2_1;1
+icon-1 = 2_2;2
+icon-2 = 2_3;3
+icon-3 = 2_4;4
+icon-4 = 2_5;5
+icon-5 = 2_6;6
+icon-6 = 2_7;7
+icon-7 = 2_8;8
+icon-8 = 2_9;9
+icon-9 = 2_10;10
 
-label-urgent = %name%
-label-urgent-foreground = ${colors.foreground}
-label-urgent-background = ${colors.alert}
-label-urgent-underline = ${colors.alert}
-label-urgent-padding = 2
+[module/ewmh3]
+inherit = module/ewmh
 
-label-empty = %name%
-label-empty-foreground = ${colors.foreground}
-label-empty-padding = 2
-format-foreground = ${colors.foreground}
-format-background = ${colors.background}
+icon-0 = 3_1;
+icon-1 = 3_2;2
+icon-2 = 3_3;3
+icon-3 = 3_4;4
+icon-4 = 3_5;5
+icon-5 = 3_6;6
+icon-6 = 3_7;7
+icon-7 = 3_8;8
+icon-8 = 3_9;9
+icon-9 = 3_10;10
 
 ################################################################################
 
@@ -776,10 +792,10 @@ format-online-background = ${colors.background}
 ;https://github.com/jaagr/polybar/wiki/Module:-network
 type = internal/network
 ;interface = wlp3s0
-;interface = enp14s0
+interface = enp5s0
 ;interface = enp0s31f6
 ;interface = enp4s0
-interface = wlp0s20f3
+; interface = wlp0s20f3
 label-connected = "%upspeed:7%"
 format-connected = <label-connected>
 format-connected-prefix = ""
@@ -793,11 +809,8 @@ format-connected-background = ${colors.background}
 [module/networkspeeddown]
 ;https://github.com/jaagr/polybar/wiki/Module:-network
 type = internal/network
-;interface = wlp3s0
-;interface = enp14s0
-;interface = enp0s31f6
-;interface = enp4s0
-interface = wlp0s20f3
+interface = enp5s0
+; interface = wlp0s20f3
 label-connected = "%downspeed:7%"
 format-connected = <label-connected>
 format-connected-prefix = ""
@@ -921,13 +934,17 @@ click-left = spotify
 
 ################################################################################
 
-[module/system-bluetooth-bluetoothctl]
+[module/bluetooth]
 interval = 1
 type = custom/script
-fortmat-prefix = ' 4 '
+; format-prefix = ' 4 '
 exec = ~/.config/polybar/scripts/system-bluetooth-bluetoothctl.sh
-tail = true
-click-left = ~/.config/polybar/scripts/system-bluetooth-bluetoothctl.sh --toggle &
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+format-underline = #008BFF
+; tail = true
+click-right = ~/.config/polybar/scripts/system-bluetooth-bluetoothctl.sh --toggle &
+click-left = exec blueberry
 
 ################################################################################
 
@@ -1049,8 +1066,8 @@ format-muted-background = ${colors.background}
 type = custom/script
 interval = 10
 format = <label>
-format-prefix = " "
-format-prefix-foreground = #3EC13F
+; format-prefix = " "
+; format-prefix-foreground = #3EC13F
 format-underline = #3EC13F
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
@@ -1062,7 +1079,7 @@ tail = true
 [module/wired-network]
 ;https://github.com/jaagr/polybar/wiki/Module:-network
 type = internal/network
-interface = enp4s0
+interface = enp5s0
 ;interface = enp14s0
 interval = 3.0
 
@@ -1159,29 +1176,19 @@ format-background = ${colors.background}
 
 ################################################################################
 
-[module/xkeyboard]
-;https://github.com/jaagr/polybar/wiki/Module:-xkeyboard
-type = internal/xkeyboard
-blacklist-0 = num lock
-
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground}
-format-prefix-background = ${colors.background}
-format-prefix-underline = #3ecfb2
+[module/keyboard-layout]
+type = custom/script
+exec = ~/.config/polybar/scripts/change_layout.sh &
+interval = 1
+label = %output%
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
+format-prefix = " "
+format-prefix-foreground = #3ecfb2
+format-underline = #3ecfb2
 
-label-layout = %layout%
-label-layout-underline = #3ecfb2
-label-indicator-padding = 2
-label-indicator-margin = 1
-label-indicator-background = ${colors.background}
-label-indicator-underline = ${colors.foreground}
+click-left = exec ~/.config/polybar/scripts/change_layout.sh --toggle &
 
-; click-left = "setxkbmap -layout us -variant altgr-intl -option nodeadkeys"
-
-; click-left = exec --no-startup-id setxkbmap gb,us -option 'grp:alt_shift_toggle'
-; click-left = systemctl 
 
 ################################################################################
 
@@ -1201,44 +1208,44 @@ format-background = ${colors.background}
 ###############################################################################
 
 
-[module/xworkspaces]
-type = internal/xworkspaces
+; [module/xworkspaces]
+; type = internal/xworkspaces
 
-pin-workspaces = false
-enable-click = true
-enable-scroll = true
-reverse-scroll = true
-
-
-icon-0 = 1;
-icon-1 = 2;
-icon-2 = 3;
-icon-3 = 4;
-icon-4 = 5;
-#icon-5 = 6;
-format = <label-state>
-label-monitor = %name%
-
-label-active = %index%
-label-active-foreground = ${colors.active}
-label-active-background = ${colors.background}
-label-active-underline= #6790eb
-label-active-padding = 2
-
-label-occupied = %index%
-label-occupied-foreground = ${colors.foreground}
-label-occupied-background = ${colors.background}
-label-occupied-padding = 2
-
-label-urgent = %index%
-label-urgent-foreground = ${colors.foreground}
-label-urgent-background = ${colors.alert}
-label-urgent-underline = ${colors.alert}
-label-urgent-padding = 2
+; pin-workspaces = true
+; enable-click = true
+; enable-scroll = true
+; reverse-scroll = true
 
 
-label-empty = %index%
-label-empty-foreground = ${colors.foreground}
-label-empty-padding = 2
-format-foreground = ${colors.foreground}
-format-background = ${colors.background}
+; icon-0 = 1;
+; icon-1 = 2;
+; icon-2 = 3;
+; icon-3 = 4;
+; icon-4 = 5;
+; #icon-5 = 6;
+; format = <label-monitor><label-state>
+; label-monitor = %name%
+
+; label-active = %index%
+; label-active-foreground = ${colors.active}
+; label-active-background = ${colors.background}
+; label-active-underline= #6790eb
+; label-active-padding = 2
+
+; label-occupied = %index%
+; label-occupied-foreground = ${colors.foreground}
+; label-occupied-background = ${colors.background}
+; label-occupied-padding = 2
+
+; label-urgent = %index%
+; label-urgent-foreground = ${colors.foreground}
+; label-urgent-background = ${colors.alert}
+; label-urgent-underline = ${colors.alert}
+; label-urgent-padding = 2
+
+
+; label-empty = %index%
+; label-empty-foreground = ${colors.foreground}
+; label-empty-padding = 2
+; format-foreground = ${colors.foreground}
+; format-background = ${colors.background}

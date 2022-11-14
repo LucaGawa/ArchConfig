@@ -1,34 +1,36 @@
 #!/bin/sh
 
 bluetooth_print() {
-    bluetoothctl | while read -r; do
-        if [ "$(bluetooth)" = "bluetooth = on" ]; then
-            printf 'On'
-
-            devices_paired=$(bluetoothctl devices Paired | grep Device | cut -d ' ' -f 2)
-            counter=0
-
+    if [ $(bluetoothctl show | grep "Powered: yes" | wc -c) -eq 0 ]
+then
+  echo "%{F#66ffffff}"
+else
+  if [ $(echo info | bluetoothctl | grep 'Device' | wc -c) -eq 0 ]
+  then 
+    echo ""
+  fi
+  devices_paired=$(bluetoothctl devices Paired | grep Device | cut -d ' ' -f 2)
+  counter=0
+  aliases=""
             for device in $devices_paired; do
                 device_info=$(bluetoothctl info "$device")
-
+                
                 if echo "$device_info" | grep -q "Connected: yes"; then
                     device_alias=$(echo "$device_info" | grep "Alias" | cut -d ' ' -f 2-)
-
+                    
                     if [ $counter -gt 0 ]; then
-                        printf ", %s" "$device_alias"
+                        aliases+=", $device_alias"
                     else
-                        printf " %s" "$device_alias"
+                        aliases+="$device_alias"
                     fi
 
                     counter=$((counter + 1))
                 fi
             done
+#   echo "%{F#2193ff} $aliases"
+echo " $aliases"
+fi
 
-            printf '\n'
-        else
-            echo "off"
-        fi
-    done
 }
 
 bluetooth_toggle() {

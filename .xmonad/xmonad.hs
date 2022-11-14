@@ -49,8 +49,8 @@ myStartupHook = do
     windows (greedyViewOnScreen 0 "0_1") --todo make dynamical with loop
     windows (greedyViewOnScreen 1 "1_1")
     windows (greedyViewOnScreen 2 "2_1")
-    windows (greedyViewOnScreen 3 "10")
-    -- spawnOnOnce "10" "spotify" --spawn just on start not on rebuild
+    windows (greedyViewOnScreen 3 "3_1")
+    spawnOnOnce "3_1" "spotify" --spawn just on start not on rebuild
     setWMName "LG3D"
 
 
@@ -194,7 +194,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   --MULTIMEDIA KEYS
 
   -- Mute volume
-  , ((0, xF86XK_AudioMute), spawn $ "amixer -q set Master toggle") --todo audiotasten
+  , ((0, xF86XK_AudioMute), spawn $ "amixer -q set Master toggle")
 
   -- Decrease volume
   , ((0, xF86XK_AudioLowerVolume), spawn $ "amixer -q set Master 5%-")
