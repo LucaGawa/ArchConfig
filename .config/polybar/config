@@ -126,6 +126,7 @@ font-2 = "Noto Sans:size=10;0"
 font-3 = "Noto Sans Mono:size=10;0"
 font-4 = "FontAwesome5Brands:size=13;0"
 font-5 = "FontAwesome:size=10;0"
+font-6 = "Symbols Nerd Font:size=13;0"
 
 modules-left = ewmh0 xwindow 
 modules-center = date
@@ -213,7 +214,8 @@ font-2 = "Noto Sans:size=10;0"
 font-3 = "Noto Sans Mono:size=10;0"
 font-4 = "FontAwesome5Brands:size=13;0"
 font-5 = "Nerd Font:pixelsize=10;0"
-; font-0 = "SauceCodePro Nerd Font:pixelsize=10;1"
+font-6 = "Symbols Nerd Font:size=13;0"
+
 
 modules-left = spotify1 xworkspaces
 modules-center = networkspeeddown pub-ip networkspeedup
@@ -245,6 +247,8 @@ format-background = ${colors.background}
 format-prefix = "  "
 format-prefix-foreground = #FFBB00
 format-underline = #FFBB00
+tail = true
+click-left = exec ~/.config/polybar/scripts/check-updates.sh --download &
 ################################################################################
 
 ; [module/bluetooth]
@@ -907,11 +911,11 @@ format-background = ${colors.background}
 ################################################################################
 
 
-[module/spotify] 
-type = custom/script 
-exec-if = "pgrep spotify -x" 
-exec  = "spotifyctl -q status --format '%artist%: %title%'" 
-click-left = "spotifyctl -q playpause"
+; [module/spotify] 
+; type = custom/script 
+; exec-if = "pgrep spotify -x" 
+; exec  = "spotifyctl -q status --format '%artist%: %title%'" 
+; click-left = "spotifyctl -q playpause"
 
 
 [module/spotify1]
@@ -927,7 +931,7 @@ format-padding = 2
 format-underline = #0f0
 format-prefix = "  "
 format-prefix-foreground = #0f0
-label = %output:0:150%
+label = %output:0:200%
 click-left = spotify
 
 ;  
@@ -1066,7 +1070,7 @@ format-muted-background = ${colors.background}
 type = custom/script
 interval = 10
 format = <label>
-; format-prefix = " "
+; format-prefix = "    ϋ   "
 ; format-prefix-foreground = #3EC13F
 format-underline = #3EC13F
 format-foreground = ${colors.foreground}

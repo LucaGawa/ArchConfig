@@ -30,8 +30,14 @@ try:
     if REQ.status_code == 200:
         CURRENT = REQ.json()["weather"][0]["description"].capitalize()
         TEMP = int(float(REQ.json()["main"]["temp"]))
-        if CURRENT == "Bedeckt":
-            CURRENT = ""
+        if CURRENT == "Klarer himmel":
+            CURRENT = ""
+        elif CURRENT == "Bedeckt":
+            CURRENT = ""
+        elif CURRENT == "Mäßig bewölkt":
+            CURRENT = ""
+        elif CURRENT == "Überwiegend bewölkt":
+            CURRENT = ""
         elif CURRENT == "Gewitter":
             CURRENT = ""
         elif CURRENT == "Sonnig":

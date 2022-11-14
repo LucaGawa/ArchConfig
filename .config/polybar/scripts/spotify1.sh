@@ -24,13 +24,13 @@ main() {
 
   if [[ "$status" == "Playing" ]];
   then
-    playpause=""
+    playpause=""
   else
-    playpause=""
+    playpause="契"
   fi
   
 
-  echo "%{A1:spotifyctl -q previous &:}  %{A}%{A1:spotifyctl -q playpause &:} $playpause %{A}%{A1:spotifyctl -q next &:}  %{A} $artist- $title" 
+  echo "%{A1:spotifyctl -q previous &:} 玲 %{A}%{A1:spotifyctl -q playpause &:} $playpause %{A}%{A1:spotifyctl -q next &:} 怜 %{A} $artist- $title" 
   
   
   # +"${*:-%artist% - %title%}" | sed "s/%artist%/$artist/g;s/%title%/$title/g;s/%album%/$album/g"i | sed 's/&/\\&/g'
