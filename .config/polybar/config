@@ -12,7 +12,7 @@
 ;=====================================================
 
 ; todo change output device with click on audio widget
-
+; test
 
 [global/wm]
 ;https://github.com/jaagr/polybar/wiki/Configuration#global-wm-settings
