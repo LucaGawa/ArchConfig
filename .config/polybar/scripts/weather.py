@@ -34,6 +34,8 @@ try:
             CURRENT = ""
         elif CURRENT == "Bedeckt":
             CURRENT = ""
+        elif CURRENT == "Ein paar wolken":
+            CURRENT = ""
         elif CURRENT == "Mäßig bewölkt":
             CURRENT = ""
         elif CURRENT == "Überwiegend bewölkt":
@@ -42,6 +44,8 @@ try:
             CURRENT = ""
         elif CURRENT == "Sonnig":
             CURRENT = ""
+        elif CURRENT == "Leichter regen":
+            CURRENT = ""
 
         print("{} {} °{}".format(CURRENT, TEMP, UNIT_KEY))
     else:

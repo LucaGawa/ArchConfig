@@ -158,7 +158,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_Return), spawn $ "alacritty" ) 
   , ((modMask, xK_F12), spawn $ "xfce4-appfinder" )
   , ((modMask, xK_F11), spawn $ "xfce4-settings-manager" )
-  , ((modMask, xK_z), spawnOn "2_1" "xournalpp" )
+  , ((modMask, xK_z), spawnOn "2_1" "xournalpp" ) --todo and follow
 
   -- FUNCTION KEYS
   , ((0, xK_F12), spawn $ "xfce4-terminal --drop-down" )

@@ -942,6 +942,7 @@ click-left = spotify
 ################################################################################
 
 [module/bluetooth]
+;todo bluetooth symbols form nerdfonts      
 interval = 1
 type = custom/script
 ; format-prefix = ' 4 '
