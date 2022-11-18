@@ -32,6 +32,8 @@ try:
         TEMP = int(float(REQ.json()["main"]["temp"]))
         if CURRENT == "Klarer himmel":
             CURRENT = ""
+        elif CURRENT == "Ein paar wolken":
+            CURRENT = ""
         elif CURRENT == "Bedeckt":
             CURRENT = ""
         elif CURRENT == "Mäßig bewölkt":
