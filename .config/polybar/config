@@ -86,10 +86,12 @@ monitor = ${env:MONITOR}
 ;monitor-fallback = HDMI1
 monitor-strict = false
 override-redirect = true
-width = 100%
+
+width = 1900
 height = 30
-;offset-x = 1%
-;offset-y = 1%
+offset-x = 10
+offset-y = 5
+
 radius = 5.0
 fixed-center = true
 bottom = false
@@ -100,7 +102,7 @@ foreground = ${colors.foreground}
 
 line-size = 2
 line-color = #f00
-
+; border = 100
 ;border-size = 2
 ; border-left-size = 5
 ; border-right-size = 5
@@ -108,8 +110,8 @@ line-color = #f00
 ; border-bottom-size = 5
 ; border-color = #00000000
 
-padding-left = 0
-padding-right = 1
+padding-left = 5
+padding-right = 5
 
 module-margin-left = 3
 module-margin-right = 3
@@ -143,9 +145,15 @@ tray-background = ${colors.background}
 
 [bar/mainbar-xmonad-DP-2]
 inherit = bar/mainbar-xmonad
+width = 3420
+
+
 
 [bar/mainbar-xmonad-HDMI-1]
 inherit = bar/mainbar-xmonad
+width = 1900
+
+
 
 modules-left = ewmh1 
 modules-center = xwindow
@@ -156,7 +164,7 @@ inherit = bar/mainbar-xmonad
 
 modules-left = ewmh2 
 modules-center = xwindow
-modules-right = spotify1
+modules-right = 
 
 [bar/mainbar-xmonad-DP-1]
 inherit = bar/mainbar-xmonad
