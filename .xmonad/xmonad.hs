@@ -117,7 +117,7 @@ myManageHook = composeAll . concat $
 
 -- $ smartBorders
 
-myLayout = avoidStruts $ smartBorders  (spacingRaw True (Border 0 5 5 5) True (Border 5 5 5 5) True $ mkToggle (NBFULL ?? NOBORDERS ?? EOT) $ tiled ||| Mirror tiled |||  ThreeColMid 1 (3/100) (1/2) ||| Full)
+myLayout = avoidStruts $ smartBorders  (spacingRaw False (Border 0 5 5 5) False (Border 5 5 5 5) True $ mkToggle (NBFULL ?? FULL ?? NOBORDERS ?? SMARTBORDERS ?? EOT) $ tiled ||| Mirror tiled |||  ThreeColMid 1 (3/100) (1/2) ||| Full)
     where
         tiled = Tall nmaster delta tiled_ratio
         nmaster = 1
@@ -155,7 +155,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_c), spawn $ "conky-toggle" )
   , ((modMask, xK_f), sendMessage $ Toggle NBFULL) --todo same key than toggle polybar
   , ((modMask, xK_b), spawn "polybar-msg cmd toggle")
-  , ((modMask, xK_g), sendMessage $ ToggleGaps) --todo work not for spacing
+  , ((modMask, xK_g), sendMessage $ Toggle SMARTBORDERS) --todo work not for spacing
 --   , ((modMask, xK_h), spawn $ "urxvt 'htop task manager' -e htop" )
   , ((mod1Mask, xK_F4), kill )
 --   , ((modMask, xK_v), spawn $ "pavucontrol" )
@@ -334,7 +334,7 @@ main = do
 , manageHook = manageSpawn <+> myManageHook <+> manageHook myBaseConfig
 , modMask = myModMask
 , borderWidth = myBorderWidth
-, handleEventHook    = handleEventHook myBaseConfig <+> fullscreenEventHook
+, handleEventHook    = handleEventHook myBaseConfig -- <+> fullscreenEventHook
 , focusFollowsMouse = myFocusFollowsMouse
 , workspaces = withScreens nScreens ["1","2","3","4","5","6","7","8","9","10"]
 , focusedBorderColor = focdBord
