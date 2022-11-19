@@ -84,6 +84,7 @@ myManageHook = composeAll . concat $
     , [title =? t --> doFloat | t <- myTFloats]
     , [resource =? r --> doFloat | r <- myRFloats]
     , [resource =? i --> doIgnore | i <- myIgnores]
+    
     -- , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "\61612" | x <- my1Shifts]
     -- , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "\61899" | x <- my2Shifts]
     -- , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "\61947" | x <- my3Shifts]
@@ -114,13 +115,17 @@ myManageHook = composeAll . concat $
 
 
 
+-- $ smartBorders
 
-myLayout = avoidStruts (spacingRaw True (Border 0 5 5 5) True (Border 5 5 5 5) True $ mkToggle (NBFULL ?? NOBORDERS ?? EOT) $ tiled ||| Mirror tiled |||  ThreeColMid 1 (3/100) (1/2) ||| Full)
+myLayout = avoidStruts $ smartBorders  (spacingRaw True (Border 0 5 5 5) True (Border 5 5 5 5) True $ mkToggle (NBFULL ?? NOBORDERS ?? EOT) $ tiled ||| Mirror tiled |||  ThreeColMid 1 (3/100) (1/2) ||| Full)
     where
         tiled = Tall nmaster delta tiled_ratio
         nmaster = 1
         delta = 3/100
         tiled_ratio = 1/2
+
+-- myLayout = avoidStruts (Tall)
+
 
 
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
@@ -150,6 +155,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_c), spawn $ "conky-toggle" )
   , ((modMask, xK_f), sendMessage $ Toggle NBFULL) --todo same key than toggle polybar
   , ((modMask, xK_b), spawn "polybar-msg cmd toggle")
+  , ((modMask, xK_g), sendMessage $ ToggleGaps) --todo work not for spacing
 --   , ((modMask, xK_h), spawn $ "urxvt 'htop task manager' -e htop" )
   , ((mod1Mask, xK_F4), kill )
 --   , ((modMask, xK_v), spawn $ "pavucontrol" )
@@ -176,8 +182,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((controlMask .|. mod1Mask , xK_o ), spawn $ "$HOME/.xmonad/scripts/picom-toggle.sh")
   , ((controlMask .|. mod1Mask , xK_p ), spawn $ "pamac-manager")
   , ((controlMask .|. mod1Mask , xK_u ), spawn $ "pavucontrol")
-  , ((controlMask .|. mod1Mask , xK_v ), spawn $ "vivaldi-stable")
-  , ((controlMask .|. mod1Mask , xK_Return ), spawn $ "alacritty")
 
   -- ALT + ... KEYS
 
@@ -326,11 +330,11 @@ main = do
             myBaseConfig
 
                 {startupHook = myStartupHook
-, layoutHook = gaps [(U,35), (D,5), (R,5), (L,5)] $ myLayout ||| layoutHook myBaseConfig
+, layoutHook =  myLayout ||| layoutHook myBaseConfig
 , manageHook = manageSpawn <+> myManageHook <+> manageHook myBaseConfig
 , modMask = myModMask
 , borderWidth = myBorderWidth
-, handleEventHook    = handleEventHook myBaseConfig
+, handleEventHook    = handleEventHook myBaseConfig <+> fullscreenEventHook
 , focusFollowsMouse = myFocusFollowsMouse
 , workspaces = withScreens nScreens ["1","2","3","4","5","6","7","8","9","10"]
 , focusedBorderColor = focdBord
