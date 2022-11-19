@@ -145,7 +145,7 @@ tray-background = ${colors.background}
 
 [bar/mainbar-xmonad-DP-2]
 inherit = bar/mainbar-xmonad
-width = 3420
+width = 3420 ;todo dynamical for other resolution
 
 
 

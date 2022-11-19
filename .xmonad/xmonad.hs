@@ -324,7 +324,7 @@ main = do
         [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
 
 
-    xmonad . ewmh $
+    xmonad $ ewmhFullscreen . ewmh $
   --Keyboard layouts
   --qwerty users use this line
             myBaseConfig
