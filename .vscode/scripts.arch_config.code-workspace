@@ -7,5 +7,7 @@
 			"path": "../.config/polybar"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"git.ignoreLimitWarning": true
+	}
 }
