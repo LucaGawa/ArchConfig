@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "../.config/polybar"
+		},
+		{
+			"path": "../.config/starship"
 		}
 	],
 	"settings": {
