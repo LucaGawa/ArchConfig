@@ -23,7 +23,7 @@ import XMonad.Layout.Spacing
 import XMonad.Layout.Gaps
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.NoBorders
-import XMonad.Layout.Fullscreen (fullscreenFull)
+-- import XMonad.Layout.Fullscreen (fullscreenFull)
 import XMonad.Layout.Cross(simpleCross)
 import XMonad.Layout.Spiral(spiral)
 import XMonad.Layout.ThreeColumns
@@ -323,8 +323,8 @@ main = do
     D.requestName dbus (D.busName_ "org.xmonad.Log")
         [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
 
-
-    xmonad $ ewmhFullscreen . ewmh $
+    -- docks $
+    xmonad $  ewmhFullscreen . ewmh $
   --Keyboard layouts
   --qwerty users use this line
             myBaseConfig
@@ -334,7 +334,7 @@ main = do
 , manageHook = manageSpawn <+> myManageHook <+> manageHook myBaseConfig
 , modMask = myModMask
 , borderWidth = myBorderWidth
-, handleEventHook    = handleEventHook myBaseConfig -- <+> fullscreenEventHook
+, handleEventHook    = handleEventHook myBaseConfig -- <+> ewmhFullscreen
 , focusFollowsMouse = myFocusFollowsMouse
 , workspaces = withScreens nScreens ["1","2","3","4","5","6","7","8","9","10"]
 , focusedBorderColor = focdBord
