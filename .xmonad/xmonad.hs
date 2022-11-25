@@ -31,6 +31,7 @@ import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.IndependentScreens
 
+import XMonad.Hooks.DynamicProperty (dynamicTitle)
 
 import XMonad.Layout.CenteredMaster(centerMaster)
 
@@ -50,6 +51,7 @@ myStartupHook = do
     windows (greedyViewOnScreen 1 "1_1")
     windows (greedyViewOnScreen 2 "2_1")
     windows (greedyViewOnScreen 3 "3_1")
+    -- nScreens <- countScreens
     spawnOnOnce "3_1" "spotify" --spawn just on start not on rebuild
     setWMName "LG3D"
 
@@ -112,6 +114,24 @@ myManageHook = composeAll . concat $
     --my8Shifts = ["Xournalpp"]
     --my9Shifts = ["spotify"]
     --my10Shifts = ["thunderbird"]
+
+
+manageZoomHook =
+  composeAll $
+    [ (className =? zoomClassName) <&&> shouldFloat <$> title --> doFloat,
+      (className =? zoomClassName) <&&> shouldSink <$> title --> doSink
+    ]
+  where
+    zoomClassName = "zoom"
+    tileTitles =
+      [ "Zoom - Free Account", -- main window
+        "Zoom - Licensed Account", -- main window
+        "Zoom", -- meeting window on creation
+        "Zoom Meeting" -- meeting window shortly after creation
+      ]
+    shouldFloat title = title `notElem` tileTitles
+    shouldSink title = title `elem` tileTitles
+    doSink = (ask >>= doF . W.sink) <+> doF W.swapDown
 
 
 
@@ -331,10 +351,13 @@ main = do
 
                 {startupHook = myStartupHook
 , layoutHook =  myLayout ||| layoutHook myBaseConfig
-, manageHook = manageSpawn <+> myManageHook <+> manageHook myBaseConfig
+, manageHook = manageSpawn <+> myManageHook <+> manageZoomHook <+> manageHook myBaseConfig
 , modMask = myModMask
 , borderWidth = myBorderWidth
-, handleEventHook    = handleEventHook myBaseConfig -- <+> ewmhFullscreen
+, handleEventHook = mconcat[
+  dynamicTitle manageZoomHook,
+  handleEventHook myBaseConfig
+] -- <+> ewmhFullscreen
 , focusFollowsMouse = myFocusFollowsMouse
 , workspaces = withScreens nScreens ["1","2","3","4","5","6","7","8","9","10"]
 , focusedBorderColor = focdBord
