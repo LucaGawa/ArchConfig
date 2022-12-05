@@ -14,7 +14,7 @@ import XMonad.Util.Run(spawnPipe)
 import XMonad.Actions.SpawnOn
 import XMonad.Util.SpawnOnce
 import XMonad.Actions.OnScreen
-import XMonad.Util.EZConfig (additionalKeys, additionalMouseBindings)
+import XMonad.Util.EZConfig (additionalKeys, additionalMouseBindings, mkKeymap)
 import XMonad.Actions.CycleWS
 import XMonad.Hooks.UrgencyHook
 import qualified Codec.Binary.UTF8.String as UTF8
@@ -164,174 +164,170 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 
 -- keys config
 
-myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
+-- myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
+
+myKeys = \c -> mkKeymap c $
   ----------------------------------------------------------------------
   -- SUPER + FUNCTION KEYS
 
-  [ ((modMask, xK_e), spawn $ "thunar " )
-  , ((modMask, xK_s), spawn $ "spotify" )
-  , ((modMask, xK_w), spawn $ "brave" )
-  , ((modMask, xK_m), spawn $ "Mathematica" )
-  , ((modMask, xK_c), spawn $ "conky-toggle" )
-  , ((modMask, xK_f), sendMessage $ Toggle NBFULL) --todo same key than toggle polybar
-  , ((modMask, xK_b), spawn "polybar-msg cmd toggle")
-  , ((modMask, xK_g), sendMessage $ Toggle SMARTBORDERS) --todo work not for spacing
+  [ ("M-e", spawn $ "thunar " )
+  , ("M-s", spawn $ "spotify" )
+  , ("M-w", spawn $ "brave" )
+  , ("M-m", spawn $ "Mathematica" )
+  , ("M-c", spawn $ "conky-toggle" )
+  , ("M-f", sendMessage $ Toggle NBFULL) --todo same key than toggle polybar
+  , ("M-b", spawn "polybar-msg cmd toggle")
+  -- , ((modMask, xK_g), sendMessage $ Toggle SMARTBORDERS) --todo work not for spacing
 --   , ((modMask, xK_h), spawn $ "urxvt 'htop task manager' -e htop" )
-  , ((mod1Mask, xK_F4), kill )
+  , ("M1-<F4>", kill )
 --   , ((modMask, xK_v), spawn $ "pavucontrol" )
-  , ((modMask, xK_x), spawn $ "archlinux-logout" )
-  , ((modMask, xK_Escape), spawn $ "xkill" )
-  , ((modMask, xK_Return), spawn $ "alacritty" ) 
-  , ((modMask, xK_F12), spawn $ "rofi -show drun" )
-  , ((modMask, xK_F11), spawn $ "xfce4-settings-manager" )
-  , ((modMask, xK_z), spawnOn "2_1" "xournalpp" ) --todo and follow
+  -- , ((modMask, xK_x), spawn $ "archlinux-logout" )
+  , ("M-<Esc>", spawn $ "xkill" )
+  , ("M-<Return>", spawn $ "alacritty" ) 
+  , ("M-<F12>", spawn $ "rofi -show drun" )
+  , ("M-<F11>", spawn $ "xfce4-settings-manager" )
+  , ("M-z", spawnOn "2_1" "xournalpp" ) --todo and follow
 
-  -- FUNCTION KEYS
-  , ((0, xK_F12), spawn $ "xfce4-terminal --drop-down" )
+--   -- FUNCTION KEYS
+  , ("<F12>", spawn $ "xfce4-terminal --drop-down" )
 
-  -- SUPER + SHIFT KEYS
-  , ((modMask .|. shiftMask , xK_r ), spawn $ "xmonad --recompile && xmonad --restart")
-  , ((modMask .|. shiftMask , xK_q ), kill)
-  -- , ((modMask .|. shiftMask , xK_x ), io (exitWith ExitSuccess))
+--   -- SUPER + SHIFT KEYS
+  , ("M-S-r", spawn $ "xmonad --recompile && xmonad --restart")
 
-  -- CONTROL + ALT KEYS
+--   -- , ((modMask .|. shiftMask , xK_x ), io (exitWith ExitSuccess))
 
-  , ((controlMask .|. mod1Mask , xK_k ), spawn $ "archlinux-logout")
-  , ((controlMask .|. mod1Mask , xK_l ), spawn $ "archlinux-logout")
-  , ((controlMask .|. mod1Mask , xK_m ), spawn $ "xfce4-settings-manager")
-  , ((controlMask .|. mod1Mask , xK_o ), spawn $ "$HOME/.xmonad/scripts/picom-toggle.sh")
-  , ((controlMask .|. mod1Mask , xK_p ), spawn $ "pamac-manager")
-  , ((controlMask .|. mod1Mask , xK_u ), spawn $ "pavucontrol")
+--   -- CONTROL + ALT KEYS
 
-  -- ALT + ... KEYS
+--   -- , ((controlMask .|. mod1Mask , xK_k ), spawn $ "archlinux-logout")
+--   -- , ((controlMask .|. mod1Mask , xK_l ), spawn $ "archlinux-logout")
+
+  , ("M1-C-p", spawn $ "$HOME/.xmonad/scripts/picom-toggle.sh")
 
 
-  --CONTROL + SHIFT KEYS
+--   -- ALT + ... KEYS
+  
 
-  , ((controlMask .|. mod1Mask , xK_Delete ), spawn $ "xfce4-taskmanager")
+--   --CONTROL + ALT KEYS
 
-  --SCREENSHOTS
-  , ((0, xK_Print), spawn $ "scrot -s 'ArcoLinux-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f $$(xdg-user-dir PICTURES)'")
-  , ((controlMask, xK_Print), spawn $ "xfce4-screenshooter" )
+  , ("C-M1-<Del>", spawn $ "xfce4-taskmanager")
 
-
-  --MULTIMEDIA KEYS
-
-  -- Mute volume
-  , ((0, xF86XK_AudioMute), spawn $ "amixer -q set Master toggle")
-
-  -- Decrease volume
-  , ((0, xF86XK_AudioLowerVolume), spawn $ "amixer -q set Master 5%-")
-
-  -- Increase volume
-  , ((0, xF86XK_AudioRaiseVolume), spawn $ "amixer -q set Master 5%+")
-
-  -- Increase brightness
-  , ((0, xF86XK_MonBrightnessUp),  spawn $ "xbacklight -inc 5")
-
-  -- Decrease brightness
-  , ((0, xF86XK_MonBrightnessDown), spawn $ "xbacklight -dec 5")
-
-  -- Alternative to increase brightness
-
-  -- Increase brightness
-  -- , ((0, xF86XK_MonBrightnessUp),  spawn $ "brightnessctl s 5%+")
-
-  -- Decrease brightness
-  -- , ((0, xF86XK_MonBrightnessDown), spawn $ "brightnessctl s 5%-")
-
-  --, ((0, xF86XK_AudioPlay), spawn $ "mpc toggle")
---  , ((0, xF86XK_AudioNext), spawn $ "mpc next")
---  , ((0, xF86XK_AudioPrev), spawn $ "mpc prev")
--- , ((0, xF86XK_AudioStop), spawn $ "mpc stop")
-
-  , ((0, xF86XK_AudioPlay), spawn $ "playerctl play-pause")
-  , ((0, xF86XK_AudioNext), spawn $ "playerctl next")
-  , ((0, xF86XK_AudioPrev), spawn $ "playerctl previous")
-  , ((0, xF86XK_AudioStop), spawn $ "playerctl stop")
+--   --SCREENSHOTS
+  , ("<Print>", spawn $ "scrot -s 'ArcoLinux-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f $$(xdg-user-dir PICTURES)'")
+--   , ((controlMask, xK_Print), spawn $ "xfce4-screenshooter" )
 
 
-  --------------------------------------------------------------------
-  --  XMONAD LAYOUT KEYS
+--   --MULTIMEDIA KEYS
 
-  -- Cycle through the available layout algorithms.
-  , ((modMask, xK_space), sendMessage NextLayout)
+--   -- Mute volume
+  , ("<XF86AudioMute>", spawn $ "amixer -q set Master toggle")
 
-  --Focus selected desktop
-  , ((mod1Mask, xK_Tab), nextWS)
+--   -- Decrease volume
+  , ("<XF86AudioLowerVolume>", spawn $ "amixer -q set Master 5%-")
 
-  --Focus selected desktop
-  , ((modMask, xK_Tab), nextWS)
+--   -- Increase volume
+  , ("<XF86AudioRaiseVolume>", spawn $ "amixer -q set Master 5%+")
 
-  --Focus selected desktop
-  , ((controlMask .|. mod1Mask , xK_Left ), prevWS)
+--   -- Increase brightness
+  , ("<F86MonBrightnessUp>",  spawn $ "xbacklight -inc 5")
 
-  --Focus selected desktop
-  , ((controlMask .|. mod1Mask , xK_Right ), nextWS)
+--   -- Decrease brightness
+  , ("<F86MonBrightnessDown>", spawn $ "xbacklight -dec 5")
 
-  --  Reset the layouts on the current workspace to default.
-  , ((modMask .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)
+--   -- Alternative to increase brightness
 
-  -- Move focus to the next window.
-  , ((modMask, xK_j), windows W.focusDown)
+--   -- Increase brightness
+--   -- , ((0, xF86XK_MonBrightnessUp),  spawn $ "brightnessctl s 5%+")
 
-  -- Move focus to the previous window.
-  , ((modMask, xK_k), windows W.focusUp  )
+--   -- Decrease brightness
+--   -- , ((0, xF86XK_MonBrightnessDown), spawn $ "brightnessctl s 5%-")
 
-  -- Move focus to the master window.
-  , ((modMask .|. shiftMask, xK_m), windows W.focusMaster  )
+--   --, ((0, xF86XK_AudioPlay), spawn $ "mpc toggle")
+-- --  , ((0, xF86XK_AudioNext), spawn $ "mpc next")
+-- --  , ((0, xF86XK_AudioPrev), spawn $ "mpc prev")
+-- -- , ((0, xF86XK_AudioStop), spawn $ "mpc stop")
 
-  -- Swap the focused window with the next window.
-  , ((modMask .|. shiftMask, xK_j), windows W.swapDown  )
+  , ("<XF86AudioPlay>", spawn $ "playerctl play-pause")
+  , ("<XF86AudioNext>", spawn $ "playerctl next")
+  , ("<XF86AudioPrev>", spawn $ "playerctl previous")
+  , ("<XF86AudioStop>", spawn $ "playerctl stop")
 
-  -- Swap the focused window with the next window.
-  , ((controlMask .|. modMask, xK_Down), windows W.swapDown  )
 
-  -- Swap the focused window with the previous window.
-  , ((modMask .|. shiftMask, xK_k), windows W.swapUp    )
+--   --------------------------------------------------------------------
+--   --  XMONAD LAYOUT KEYS
 
-  -- Swap the focused window with the previous window.
-  , ((controlMask .|. modMask, xK_Up), windows W.swapUp  )
+--   -- Cycle through the available layout algorithms.
+  , ("M-<Space>", sendMessage NextLayout)
 
-  -- Shrink the master area.
-  , ((controlMask .|. modMask , xK_h), sendMessage Shrink)
+--   --Focus selected desktop
+  , ("M1-<Tab>", nextWS)
+  , ("M1-S-<Tab>", prevWS)
 
-  -- Expand the master area.
-  , ((controlMask .|. modMask , xK_l), sendMessage Expand)
+--   --Focus selected desktop
+--   , ("M-<Tab>", nextWS) --todo next window in rofi
 
-  -- Push window back into tiling.
-  , ((controlMask .|. shiftMask , xK_t), withFocused $ windows . W.sink)
+--   --  Reset the layouts on the current workspace to default.
+  -- , ((modMask .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)
 
-  -- Increment the number of windows in the master area.
-  , ((controlMask .|. modMask, xK_Left), sendMessage (IncMasterN 1))
+--   -- Move focus to the next window.
+--   , ((modMask, xK_j), windows W.focusDown)
 
-  -- Decrement the number of windows in the master area.
-  , ((controlMask .|. modMask, xK_Right), sendMessage (IncMasterN (-1)))
+--   -- Move focus to the previous window.
+--   , ((modMask, xK_k), windows W.focusUp  )
+
+--   -- Move focus to the master window.
+--   , ((modMask .|. shiftMask, xK_m), windows W.focusMaster  )
+
+--   -- Swap the focused window with the next window.
+--   , ((modMask .|. shiftMask, xK_j), windows W.swapDown  )
+
+--   -- Swap the focused window with the next window.
+--   , ((controlMask .|. modMask, xK_Down), windows W.swapDown  )
+
+--   -- Swap the focused window with the previous window.
+--   , ((modMask .|. shiftMask, xK_k), windows W.swapUp    )
+
+--   -- Swap the focused window with the previous window.
+--   , ((controlMask .|. modMask, xK_Up), windows W.swapUp  )
+
+--   -- Shrink the master area.
+--   , ((controlMask .|. modMask , xK_h), sendMessage Shrink)
+
+--   -- Expand the master area.
+--   , ((controlMask .|. modMask , xK_l), sendMessage Expand)
+
+--   -- Push window back into tiling.
+--   , ((controlMask .|. shiftMask , xK_t), withFocused $ windows . W.sink)
+
+--   -- Increment the number of windows in the master area.
+--   , ((controlMask .|. modMask, xK_Left), sendMessage (IncMasterN 1))
+
+--   -- Decrement the number of windows in the master area.
+--   , ((controlMask .|. modMask, xK_Right), sendMessage (IncMasterN (-1)))
 
   ]
-  ++
+  -- ++
 
-  -- mod-[1..9], Switch to workspace N
-  -- mod-shift-[1..9], Move client to workspace N
-  [((m .|. modMask, k), windows $ onCurrentScreen f i)
+  -- -- mod-[1..9], Switch to workspace N
+  -- -- mod-shift-[1..9], Move client to workspace N
+  -- [((m .|. modMask, k), windows $ onCurrentScreen f i)
 
-  --Keyboard layouts
-  --qwerty users use this line
-   | (i, k) <- zip (workspaces' conf) [xK_1,xK_2,xK_3,xK_4,xK_5,xK_6,xK_7,xK_8,xK_9,xK_0]
+  -- --Keyboard layouts
+  -- --qwerty users use this line
+  --  | (i, k) <- zip (workspaces' conf) [xK_1,xK_2,xK_3,xK_4,xK_5,xK_6,xK_7,xK_8,xK_9,xK_0]
 
-      , (f, m) <- [(W.view, 0), (W.shift, shiftMask)
-      , (\i -> W.view i . W.shift i, shiftMask) -- follow the window to the screen
-      ]]
+  --     , (f, m) <- [(W.view, 0), (W.shift, shiftMask)
+  --     , (\i -> W.view i . W.shift i, shiftMask) -- follow the window to the screen
+  --     ]]
 
-  ++
-  -- ctrl-shift-{w,e,r}, Move client to screen 1, 2, or 3
-  -- [((m .|. controlMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
-  --    | (key, sc) <- zip [xK_w, xK_e] [0..]
-  --    , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+  -- ++
+  -- -- ctrl-shift-{w,e,r}, Move client to screen 1, 2, or 3
+  -- -- [((m .|. controlMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
+  -- --    | (key, sc) <- zip [xK_w, xK_e] [0..]
+  -- --    , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
-  [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
-      | (key, sc) <- zip [xK_Left, xK_Right] [0..]
-      , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+  -- [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
+  --     | (key, sc) <- zip [xK_Left, xK_Right] [0..]
+  --     , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 main :: IO ()
 main = do
