@@ -48,9 +48,13 @@ try:
             CURRENT = ""
         elif CURRENT == "Leichter regen":
             CURRENT = ""
+        # elif CURRENT == "leichtes Niesel":
+        #     CURRRENT = ""
 
         print("{} {} °{}".format(CURRENT, TEMP, UNIT_KEY))
     else:
-        print("Error: BAD HTTP STATUS CODE " + str(REQ.status_code))
+        # print("Error: BAD HTTP STATUS CODE " + str(REQ.status_code))
+        print("")
 except (ValueError, IOError):
-    print("Error: Unable print the data")
+    # print("Error: Unable print the data")
+    print("")

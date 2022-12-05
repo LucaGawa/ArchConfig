@@ -182,7 +182,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_x), spawn $ "archlinux-logout" )
   , ((modMask, xK_Escape), spawn $ "xkill" )
   , ((modMask, xK_Return), spawn $ "alacritty" ) 
-  , ((modMask, xK_F12), spawn $ "xfce4-appfinder" )
+  , ((modMask, xK_F12), spawn $ "rofi -show drun" )
   , ((modMask, xK_F11), spawn $ "xfce4-settings-manager" )
   , ((modMask, xK_z), spawnOn "2_1" "xournalpp" ) --todo and follow
 

@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "../.config/starship"
+		},
+		{
+			"path": "../.config/rofi"
 		}
 	],
 	"settings": {

@@ -3,11 +3,11 @@
 bluetooth_print() {
     if [ $(bluetoothctl show | grep "Powered: yes" | wc -c) -eq 0 ]
 then
-  echo "%{F#66ffffff}"
+  echo ""
 else
   if [ $(echo info | bluetoothctl | grep 'Device' | wc -c) -eq 0 ]
   then 
-    echo ""
+    echo ""
   fi
   devices_paired=$(bluetoothctl devices Paired | grep Device | cut -d ' ' -f 2)
   counter=0
@@ -28,7 +28,7 @@ else
                 fi
             done
 #   echo "%{F#2193ff} $aliases"
-echo " $aliases"
+echo " $aliases"
 fi
 
 }
