@@ -1,8 +1,0 @@
-# copied, and edited, from ~/.profile
-# used for graphical sessions
-
-# the default umask is set in /etc/profile; for setting the umask
-# for ssh logins, install and configure the libpam-umask package.
-#umask 022
-
-xrandr --output HDMI-0 --off --output HDMI-1 --mode 1920x1080 --pos 3440x1440 --rotate normal --output HDMI-2 --mode 1920x1080 --pos 3440x2520 --rotate normal --output DP-0 --off --output DP-1 --mode 1920x1080 --pos 814x0 --rotate normal --output DP-2 --primary --mode 3440x1440 --pos 0x1080 --rotate normal --output DP-3 --off --output DP-4 --off --output DP-5 --off
