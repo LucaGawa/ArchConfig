@@ -46,9 +46,8 @@ import qualified DBus.Client as D
 import XMonad.Actions.GridSelect
 
 
-
 myStartupHook = do
-    spawn "$HOME/.xmonad/scripts/autostart.sh"
+    spawn "$HOME/.config/xmonad/scripts/autostart.sh"
     -- initial workspaces on specific screens
     windows (greedyViewOnScreen 0 "0_1") --todo make dynamical with loop
     windows (greedyViewOnScreen 1 "1_1")
@@ -229,7 +228,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- SUPER + SHIFT KEYS
   , ((modMask .|. shiftMask , xK_r ), spawn $ "xmonad --recompile && xmonad --restart")
   , ((modMask, xK_t), spawn "autorandr --cycle")
-  , ((modMask .|. mod1Mask, xK_t), spawn "bash ~/.xmonad/scripts/cycle_layouts.sh --default")
+  , ((modMask .|. mod1Mask, xK_t), spawn "bash ~/.config/xmonad/scripts/cycle_layouts.sh --default")
   , ((modMask , xK_q ), kill)
   -- , ((modMask .|. shiftMask , xK_x ), io (exitWith ExitSuccess))
 
@@ -238,7 +237,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((controlMask .|. mod1Mask , xK_k ), spawn $ "archlinux-logout")
   , ((controlMask .|. mod1Mask , xK_l ), spawn $ "archlinux-logout")
   , ((controlMask .|. mod1Mask , xK_m ), spawn $ "xfce4-settings-manager")
-  , ((controlMask .|. mod1Mask , xK_o ), spawn $ "$HOME/.xmonad/scripts/picom-toggle.sh")
+  , ((controlMask .|. mod1Mask , xK_o ), spawn $ "$HOME/.config/xmonad/scripts/picom-toggle.sh")
   , ((controlMask .|. mod1Mask , xK_p ), spawn $ "pamac-manager")
   , ((controlMask .|. mod1Mask , xK_u ), spawn $ "pavucontrol")
 

@@ -9,7 +9,7 @@ function run {
 
 #Set your native resolution IF it does not exist in xrandr
 #More info in the script
-#run $HOME/.xmonad/scripts/set-screen-resolution-in-virtualbox.sh
+#run $HOME/.config/xmonad/scripts/set-screen-resolution-in-virtualbox.sh
 
 # Set display setup
 autorandr --change
@@ -33,7 +33,7 @@ xsetroot -cursor_name left_ptr &
 # feh --bg-fill /home/luca/Pictures/wallpaper/blue_clean.jpg &
 feh --bg-fill /home/luca/Pictures/pxfuel.jpg &
 #start the conky to learn the shortcuts
-# (conky -c $HOME/.xmonad/scripts/system-overview) &
+# (conky -c $HOME/.config/xmonad/scripts/system-overview) &
 
 #starting utility applications at boot time
 # run variety &
@@ -42,7 +42,7 @@ run pamac-tray &
 run xfce4-power-manager &
 numlockx on &
 # blueberry-tray &
-picom --config $HOME/.xmonad/scripts/picom.conf &
+picom --config $HOME/.config/xmonad/scripts/picom.conf &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 /usr/lib/xfce4/notifyd/xfce4-notifyd &
 run fusuma -d #gesten 
