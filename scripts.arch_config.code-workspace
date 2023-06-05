@@ -1,0 +1,31 @@
+{
+	"folders": [
+		{
+			"path": "../.xmonad"
+		},
+		{
+			"path": "../.config/polybar"
+		},
+		{
+			"path": "../.config/starship"
+		},
+		{
+			"path": "../.config/rofi"
+		},
+		{
+			"path": "../.config/autorandr"
+		},
+		{
+			"path": "../.config/fish"
+		},
+		{
+			"path": "../.config/fusuma"
+		},
+		{
+			"path": "../.config/kitty"
+		}
+	],
+	"settings": {
+		"git.ignoreLimitWarning": true
+	}
+}
