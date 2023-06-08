@@ -48,6 +48,9 @@ function ex
     end
 end
 
+#clean up dependencies
+alias clean-dependencies="pacman -Qstq | sudo pacman -Rs -"
+
 #grub update
 alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 
@@ -67,6 +70,7 @@ alias fix-pacman-conf="/usr/local/bin/arcolinux-fix-pacman-conf"
 alias fix-pacman-keyserver="/usr/local/bin/arcolinux-fix-pacman-gpg-conf"
 
 
+alias vim="nvim"
 alias cat="bat"
 alias update="sudo pacman -Syu"
 alias ls="exa"

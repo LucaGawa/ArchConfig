@@ -1,9 +1,6 @@
 {
 	"folders": [
 		{
-			"path": "../.xmonad"
-		},
-		{
 			"path": "../.config/polybar"
 		},
 		{
@@ -23,6 +20,9 @@
 		},
 		{
 			"path": "../.config/kitty"
+		},
+		{
+			"path": "xmonad"
 		}
 	],
 	"settings": {

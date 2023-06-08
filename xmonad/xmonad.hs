@@ -216,11 +216,14 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_x), spawn $ "archlinux-logout" )
   , ((modMask, xK_Escape), spawn $ "xkill" )
   , ((modMask, xK_Return), spawn $ "kitty" ) 
-  , ((modMask, xK_F12), spawn $ "rofi -show drun" )
+  -- rofi themes from: https://github.com/adi1090x/rofi/tree/master
+  , ((modMask, xK_F12), spawn $ "$HOME/.config/rofi/launchers/type-3/launcher.sh" )
+  , ((modMask .|. shiftMask, xK_Return), spawn $ "$HOME/.config/rofi/launchers/type-3/launcher.sh" )
   , ((modMask, xK_F11), spawn $ "xfce4-settings-manager" )
   , ((modMask, xK_z), spawnOn "2_1" "xournalpp" ) --todo and follow
   -- , ((modMask, xK_g), goToSelected defaultGSConfig)
-   , ((modMask, xK_g), goToSelected def)
+  -- , ((modMask, xK_g), goToSelected def)
+  , ((modMask, xK_g), spawn $ "$HOME/.config/rofi/launchers/type-3/launcher_window.sh" )
 
   -- FUNCTION KEYS
   -- , ((0, xK_F12), spawn $ "xfce4-terminal --drop-down" )

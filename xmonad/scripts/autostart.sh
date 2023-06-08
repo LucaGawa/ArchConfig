@@ -15,7 +15,7 @@ function run {
 autorandr --change
 
 for id in $(xsetwacom --list devices | sed -n -e 's/^.*id: //p' | cut -c1-2);
-  do xsetwacom --set $id MapToOutput DP-1-0.2;
+  do xsetwacom --set $id MapToOutput HEAD-2;
 done
 
 
@@ -47,7 +47,7 @@ picom --config $HOME/.config/xmonad/scripts/picom.conf &
 /usr/lib/xfce4/notifyd/xfce4-notifyd &
 run fusuma -d #gesten 
 run owncloud &
-# run tuxedo- &
+run tuxedo-control-center &
 
 #starting user applications at boot time
 #nitrogen --restore &
