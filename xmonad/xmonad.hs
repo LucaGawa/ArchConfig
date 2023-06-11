@@ -49,13 +49,13 @@ import XMonad.Actions.GridSelect
 myStartupHook = do
     spawn "$HOME/.config/xmonad/scripts/autostart.sh"
     -- initial workspaces on specific screens
-    windows (greedyViewOnScreen 0 "0_1") --todo make dynamical with loop
-    windows (greedyViewOnScreen 1 "1_1")
-    windows (greedyViewOnScreen 2 "2_1")
-    windows (greedyViewOnScreen 3 "3_1")
+--    windows (greedyViewOnScreen 0 "0_1") --todo make dynamical with loop
+--    windows (greedyViewOnScreen 1 "1_1")
+--    windows (greedyViewOnScreen 2 "2_1")
+--    windows (greedyViewOnScreen 3 "3_1")
     -- nScreens <- countScreens
-    spawnOnOnce "0_10" "spotify" --spawn just on start not on rebuild
-    spawnOnOnce "0_9" "thunderbird" --spawn just on start not on rebuild
+--    spawnOnOnce "0_10" "spotify" --spawn just on start not on rebuild
+--    spawnOnOnce "0_9" "thunderbird" --spawn just on start not on rebuild
     setWMName "LG3D"
 
 
@@ -147,40 +147,6 @@ myLayout = avoidStruts $ smartBorders  (spacingRaw False (Border 0 5 5 5) False 
         delta = 3/100
         tiled_ratio = 1/2
 
--- myLayout = avoidStruts (Tall)
-
---------------- Grid Select ------------------
-
--- myNavigation :: TwoD a (Maybe a)
--- myNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap navDefaultHandler
---  where navKeyMap = M.fromList [
---           ((0,xK_Escape), cancel)
---          ,((0,xK_Return), select)
---          ,((0,xK_slash) , substringSearch myNavigation)
---          ,((0,xK_Left)  , move (-1,0)  >> myNavigation)
---          ,((0,xK_h)     , move (-1,0)  >> myNavigation)
---          ,((0,xK_Right) , move (1,0)   >> myNavigation)
---          ,((0,xK_l)     , move (1,0)   >> myNavigation)
---          ,((0,xK_Down)  , move (0,1)   >> myNavigation)
---          ,((0,xK_j)     , move (0,1)   >> myNavigation)
---          ,((0,xK_Up)    , move (0,-1)  >> myNavigation)
---          ,((0,xK_y)     , move (-1,-1) >> myNavigation)
---          ,((0,xK_i)     , move (1,-1)  >> myNavigation)
---          ,((0,xK_n)     , move (-1,1)  >> myNavigation)
---          ,((0,xK_m)     , move (1,-1)  >> myNavigation)
---          ,((0,xK_space) , setPos (0,0) >> myNavigation)
---          ]
---        -- The navigation handler ignores unknown key symbols navDefaultHandler = const myNavigation
-
--- gsconfig3 = def
---    { gs_cellheight = 30
---    , gs_cellwidth = 100
---    , gs_navigate = myNavigation
---    }
-
-
-----------------------------------------------
-
 
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 
@@ -210,9 +176,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_f), sendMessage $ Toggle NBFULL) --todo same key than toggle polybar
   , ((modMask, xK_b), spawn "polybar-msg cmd toggle")
   , ((modMask, xK_g), sendMessage $ Toggle SMARTBORDERS) --todo work not for spacing
---   , ((modMask, xK_h), spawn $ "urxvt 'htop task manager' -e htop" )
   , ((mod1Mask, xK_F4), kill )
---   , ((modMask, xK_v), spawn $ "pavucontrol" )
   , ((modMask, xK_x), spawn $ "archlinux-logout" )
   , ((modMask, xK_Escape), spawn $ "xkill" )
   , ((modMask, xK_Return), spawn $ "kitty" ) 
@@ -221,12 +185,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask .|. shiftMask, xK_Return), spawn $ "$HOME/.config/rofi/launchers/type-3/launcher.sh" )
   , ((modMask, xK_F11), spawn $ "xfce4-settings-manager" )
   , ((modMask, xK_z), spawnOn "2_1" "xournalpp" ) --todo and follow
-  -- , ((modMask, xK_g), goToSelected defaultGSConfig)
-  -- , ((modMask, xK_g), goToSelected def)
   , ((modMask, xK_g), spawn $ "$HOME/.config/rofi/launchers/type-3/launcher_window.sh" )
 
   -- FUNCTION KEYS
-  -- , ((0, xK_F12), spawn $ "xfce4-terminal --drop-down" )
 
   -- SUPER + SHIFT KEYS
   , ((modMask .|. shiftMask , xK_r ), spawn $ "xmonad --recompile && xmonad --restart")
@@ -244,7 +205,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((controlMask .|. mod1Mask , xK_p ), spawn $ "pamac-manager")
   , ((controlMask .|. mod1Mask , xK_u ), spawn $ "pavucontrol")
 
-  -- ALT + ... KEYS
+  -- , ("M-g",           moveTo Next HiddenNonEmptyWS) cycle through not empty ws
 
 
   --CONTROL + SHIFT KEYS
@@ -354,11 +315,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- mod-[1..9], Switch to workspace N
   -- mod-shift-[1..9], Move client to workspace N
-  [((m .|. modMask, k), windows $ onCurrentScreen f i)
+  [((m .|. modMask, k), windows $ f i)
 
   --Keyboard layouts
-  --qwerty users use this line
-   | (i, k) <- zip (workspaces' conf) [xK_1,xK_2,xK_3,xK_4,xK_5,xK_6,xK_7,xK_8,xK_9,xK_0]
+   | (i, k) <- zip (XMonad.workspaces conf) [xK_1,xK_2,xK_3,xK_4,xK_5,xK_6,xK_7,xK_8,xK_9,xK_0]
 
       , (f, m) <- [(W.view, 0), (W.shift, shiftMask)
       , (\i -> W.view i . W.shift i, shiftMask) -- follow the window to the screen
@@ -370,12 +330,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   --    | (key, sc) <- zip [xK_w, xK_e] [0..]
   --    , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
-  -- [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
-  --     | (key, sc) <- zip [xK_Left, xK_Right] [0..]
-  --     , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+ [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f)) | (key, sc) <- zip [xK_Left, xK_Right] [0..] , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
-  [((m .|. modMask, key), screenWorkspace screen >>= flip whenJust (windows . f))      | (key, screen) <- zip [xK_Left, xK_Right, xK_Up, xK_Down] [0..]
-      , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 main :: IO ()
 main = do
@@ -405,7 +361,7 @@ main = do
   handleEventHook myBaseConfig
 ] -- <+> ewmhFullscreen
 , focusFollowsMouse = myFocusFollowsMouse
-, workspaces = withScreens nScreens ["1","2","3","4","5","6","7","8","9","10"]
+, workspaces = ["1","2","3","4","5","6","7","8","9","10"]
 , focusedBorderColor = focdBord
 , normalBorderColor = normBord
 , keys = myKeys

@@ -131,9 +131,9 @@ font-4 = "FontAwesome5Brands:size=15;0"
 font-5 = "FontAwesome:size=15;0"
 font-6 = "Symbols Nerd Font:size=15;0"
 
-modules-left = jgmenu ewmh0 xwindow 
+modules-left = jgmenu ewmh xwindow
 modules-center = date
-modules-right = updates pavolume battery bluetooth weather keyboard-layout wireless-network backlight
+modules-right = updates pavolume battery bluetooth keyboard-layout wireless-network backlight
 
 tray-detached = false
 tray-offset-x = 0
@@ -146,7 +146,7 @@ tray-background = ${colors.background}
 
 [bar/mainbar-xmonad-1]
 inherit = bar/mainbar-xmonad
-modules-left = jgmenu ewmh0
+modules-left = jgmenu ewmh
 ; width = 3420 ;todo dynamical for other resolution
 
 
@@ -155,13 +155,13 @@ modules-left = jgmenu ewmh0
 inherit = bar/mainbar-xmonad
 ; width = 1900
 
-modules-left = jgmenu ewmh1 xwindow
+modules-left = jgmenu ewmh xwindow
 ; modules-center = xwindow
 ; modules-right = 
 
 [bar/mainbar-xmonad-3]
 inherit = bar/mainbar-xmonad
-modules-left = ewmh2 
+modules-left = ewmh
 
 modules-center = xwindow
 modules-right = 
@@ -169,7 +169,7 @@ modules-right =
 [bar/mainbar-xmonad-4]
 inherit = bar/mainbar-xmonad
 
-modules-left = ewmh3 
+modules-left = ewmh
 modules-center = xwindow
 modules-right = 
 
@@ -555,88 +555,89 @@ index-sort = true
 label-monitor = %name%
 
 
-label-active = %icon% 
+label-active = %icon% %name% 
 label-active-foreground = ${colors.foreground-active}
 label-active-background = ${colors.background}
 label-active-underline= #6790eb
 label-active-padding = 2
 
 
-label-occupied = %icon%
+label-occupied = %icon% %name%
 label-occupied-foreground = ${colors.occupied-active}
 label-occupied-background = ${colors.background}
 label-occupied-padding = 2
 
-label-urgent = %icon%
+label-urgent = %icon% %name%
 label-urgent-foreground = ${colors.foreground}
 label-urgent-background = ${colors.alert}
 label-urgent-underline = ${colors.alert}
 label-urgent-padding = 2
 
-label-empty = %icon%
+label-empty = %icon% %name%
 label-empty-foreground = ${colors.foreground}
 label-empty-padding = 2
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 
-[module/ewmh0]
-inherit = module/ewmh
 
-; label-monitor = %name%
-; format = <label-state> <label-monitor>
+; [module/ewmh0]
+; inherit = module/ewmh
 
-icon-0 = 0_1;1
-icon-1 = 0_2;2
-icon-2 = 0_3;3
-icon-3 = 0_4;4
-icon-4 = 0_5;5
-icon-5 = 0_6;6
-icon-6 = 0_7;7
-icon-7 = 0_8;8
-icon-8 = 0_9;9
-icon-9 = 0_10;10
+; ; label-monitor = %name%
+; ; format = <label-state> <label-monitor>
 
-[module/ewmh1]
-inherit = module/ewmh
+; icon-0 = 0_1;1
+; icon-1 = 0_2;2
+; icon-2 = 0_3;3
+; icon-3 = 0_4;4
+; icon-4 = 0_5;5
+; icon-5 = 0_6;6
+; icon-6 = 0_7;7
+; icon-7 = 0_8;8
+; icon-8 = 0_9;9
+; icon-9 = 0_10;10
 
-icon-0 = 1_1;1
-icon-1 = 1_2;2
-icon-2 = 1_3;3
-icon-3 = 1_4;4
-icon-4 = 1_5;5
-icon-5 = 1_6;6
-icon-6 = 1_7;7
-icon-7 = 1_8;8
-icon-8 = 1_9;9
-icon-9 = 1_10;10
+; [module/ewmh1]
+; inherit = module/ewmh
 
-[module/ewmh2]
-inherit = module/ewmh
+; icon-0 = 1_1;1
+; icon-1 = 1_2;2
+; icon-2 = 1_3;3
+; icon-3 = 1_4;4
+; icon-4 = 1_5;5
+; icon-5 = 1_6;6
+; icon-6 = 1_7;7
+; icon-7 = 1_8;8
+; icon-8 = 1_9;9
+; icon-9 = 1_10;10
 
-icon-0 = 2_1;1
-icon-1 = 2_2;2
-icon-2 = 2_3;3
-icon-3 = 2_4;4
-icon-4 = 2_5;5
-icon-5 = 2_6;6
-icon-6 = 2_7;7
-icon-7 = 2_8;8
-icon-8 = 2_9;9
-icon-9 = 2_10;10
+; [module/ewmh2]
+; inherit = module/ewmh
 
-[module/ewmh3]
-inherit = module/ewmh
+; icon-0 = 2_1;1
+; icon-1 = 2_2;2
+; icon-2 = 2_3;3
+; icon-3 = 2_4;4
+; icon-4 = 2_5;5
+; icon-5 = 2_6;6
+; icon-6 = 2_7;7
+; icon-7 = 2_8;8
+; icon-8 = 2_9;9
+; icon-9 = 2_10;10
 
-icon-0 = 3_1;
-icon-1 = 3_2;2
-icon-2 = 3_3;3
-icon-3 = 3_4;4
-icon-4 = 3_5;5
-icon-5 = 3_6;6
-icon-6 = 3_7;7
-icon-7 = 3_8;8
-icon-8 = 3_9;9
-icon-9 = 3_10;10
+; [module/ewmh3]
+; inherit = module/ewmh
+
+; icon-0 = 3_1;
+; icon-1 = 3_2;2
+; icon-2 = 3_3;3
+; icon-3 = 3_4;4
+; icon-4 = 3_5;5
+; icon-5 = 3_6;6
+; icon-6 = 3_7;7
+; icon-7 = 3_8;8
+; icon-8 = 3_9;9
+; icon-9 = 3_10;10
 
 ################################################################################
 

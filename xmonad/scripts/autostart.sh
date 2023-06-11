@@ -47,7 +47,7 @@ picom --config $HOME/.config/xmonad/scripts/picom.conf &
 /usr/lib/xfce4/notifyd/xfce4-notifyd &
 run fusuma -d #gesten 
 run owncloud &
-run tuxedo-control-center &
+# run tuxedo-control-center &
 
 #starting user applications at boot time
 #nitrogen --restore &
