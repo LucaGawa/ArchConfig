@@ -48,6 +48,10 @@ function ex
     end
 end
 
+alias rotate-right="mogrify -rotate -90"
+
+alias rotate-left="mogrify -rotate 90"
+
 #clean up dependencies
 alias clean-dependencies="pacman -Qstq | sudo pacman -Rs -"
 

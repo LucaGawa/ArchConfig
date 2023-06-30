@@ -2,7 +2,6 @@ import System.IO
 import System.Exit
 
 import XMonad
-import XMonad.Hooks.SetWMName
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.EwmhDesktops
@@ -43,20 +42,18 @@ import Control.Monad (liftM2)
 import qualified DBus as D
 import qualified DBus.Client as D 
 
-import XMonad.Actions.GridSelect
-
+import XMonad.Actions.Navigation2D
 
 myStartupHook = do
-    spawn "$HOME/.config/xmonad/scripts/autostart.sh"
+      spawn "$HOME/.config/xmonad/scripts/autostart.sh"
     -- initial workspaces on specific screens
---    windows (greedyViewOnScreen 0 "0_1") --todo make dynamical with loop
---    windows (greedyViewOnScreen 1 "1_1")
---    windows (greedyViewOnScreen 2 "2_1")
---    windows (greedyViewOnScreen 3 "3_1")
-    -- nScreens <- countScreens
---    spawnOnOnce "0_10" "spotify" --spawn just on start not on rebuild
---    spawnOnOnce "0_9" "thunderbird" --spawn just on start not on rebuild
-    setWMName "LG3D"
+      windows (viewOnScreen 0 "1") --todo make dynamical with loop
+      windows (viewOnScreen 1 "2")
+      windows (viewOnScreen 2 "3")
+      windows (viewOnScreen 3 "4")
+      spawnOnOnce "10" "spotify" --spawn just on start not on rebuild
+      spawnOnOnce "9" "thunderbird" --spawn just on start not on rebuild
+      spawnOnOnce "9" "rambox" --spawn just on start not on rebuild
 
 
 -- colours
@@ -138,7 +135,6 @@ manageZoomHook =
 
 
 
--- $ smartBorders
 
 myLayout = avoidStruts $ smartBorders  (spacingRaw False (Border 0 5 5 5) False (Border 5 5 5 5) True $ mkToggle (NBFULL ?? FULL ?? NOBORDERS ?? SMARTBORDERS ?? EOT) $ tiled ||| Mirror tiled |||  ThreeColMid 1 (3/100) (1/2) ||| Full)
     where
@@ -175,7 +171,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_c), spawn $ "conky-toggle" )
   , ((modMask, xK_f), sendMessage $ Toggle NBFULL) --todo same key than toggle polybar
   , ((modMask, xK_b), spawn "polybar-msg cmd toggle")
-  , ((modMask, xK_g), sendMessage $ Toggle SMARTBORDERS) --todo work not for spacing
+  , ((modMask, xK_n), sendMessage $ Toggle SMARTBORDERS) --todo work not for spacing
   , ((mod1Mask, xK_F4), kill )
   , ((modMask, xK_x), spawn $ "archlinux-logout" )
   , ((modMask, xK_Escape), spawn $ "xkill" )
@@ -184,7 +180,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_F12), spawn $ "$HOME/.config/rofi/launchers/type-3/launcher.sh" )
   , ((modMask .|. shiftMask, xK_Return), spawn $ "$HOME/.config/rofi/launchers/type-3/launcher.sh" )
   , ((modMask, xK_F11), spawn $ "xfce4-settings-manager" )
-  , ((modMask, xK_z), spawnOn "2_1" "xournalpp" ) --todo and follow
+  , ((modMask, xK_z), spawn $ "xournalpp" ) 
   , ((modMask, xK_g), spawn $ "$HOME/.config/rofi/launchers/type-3/launcher_window.sh" )
 
   -- FUNCTION KEYS
@@ -218,36 +214,15 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
 
   --MULTIMEDIA KEYS
-
-  -- Mute volume
+  --Audio
   , ((0, xF86XK_AudioMute), spawn $ "amixer -q set Master toggle")
-
-  -- Decrease volume
   , ((0, xF86XK_AudioLowerVolume), spawn $ "amixer -q set Master 5%-")
-
-  -- Increase volume
   , ((0, xF86XK_AudioRaiseVolume), spawn $ "amixer -q set Master 5%+")
-
-  -- Increase brightness
-  , ((0, xF86XK_MonBrightnessUp),  spawn $ "xbacklight -inc 2")
-
-  -- Decrease brightness
+  --Brightness
+  , ((0, xF86XK_MonBrightnessUp),  spawn $ "xbacklight -inc 2") -- alternative: brightnesssct s 5%+
   , ((0, xF86XK_MonBrightnessDown), spawn $ "xbacklight -dec 2")
-
-  -- Alternative to increase brightness
-
-  -- Increase brightness
-  -- , ((0, xF86XK_MonBrightnessUp),  spawn $ "brightnessctl s 5%+")
-
-  -- Decrease brightness
-  -- , ((0, xF86XK_MonBrightnessDown), spawn $ "brightnessctl s 5%-")
-
-  --, ((0, xF86XK_AudioPlay), spawn $ "mpc toggle")
---  , ((0, xF86XK_AudioNext), spawn $ "mpc next")
---  , ((0, xF86XK_AudioPrev), spawn $ "mpc prev")
--- , ((0, xF86XK_AudioStop), spawn $ "mpc stop")
-
-  , ((0, xF86XK_AudioPlay), spawn $ "playerctl play-pause")
+  --Media control
+  , ((0, xF86XK_AudioPlay), spawn $ "playerctl play-pause") -- alternative: mpc toggle mpc next mpc prev...
   , ((0, xF86XK_AudioNext), spawn $ "playerctl next")
   , ((0, xF86XK_AudioPrev), spawn $ "playerctl previous")
   , ((0, xF86XK_AudioStop), spawn $ "playerctl stop")
@@ -274,26 +249,18 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   --  Reset the layouts on the current workspace to default.
   , ((modMask .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)
 
-  -- Move focus to the next window.
-  , ((modMask, xK_j), windows W.focusDown)
+  -- Navigate Windows
+  , ((modMask, xK_j), windowGo D False)
+  , ((modMask, xK_h), windowGo L False)
+  , ((modMask, xK_k), windowGo U False)
+  , ((modMask, xK_l), windowGo R False)
 
-  -- Move focus to the previous window.
-  , ((modMask, xK_k), windows W.focusUp  )
 
-  -- Move focus to the master window.
-  , ((modMask .|. shiftMask, xK_m), windows W.focusMaster  )
-
-  -- Swap the focused window with the next window.
-  , ((modMask .|. shiftMask, xK_j), windows W.swapDown  )
-
-  -- Swap the focused window with the next window.
-  , ((controlMask .|. modMask, xK_Down), windows W.swapDown  )
-
-  -- Swap the focused window with the previous window.
-  , ((modMask .|. shiftMask, xK_k), windows W.swapUp    )
-
-  -- Swap the focused window with the previous window.
-  , ((controlMask .|. modMask, xK_Up), windows W.swapUp  )
+  -- Swap Windows
+  , ((modMask .|. shiftMask, xK_j), windowSwap D False)
+  , ((modMask .|. shiftMask, xK_h), windowSwap L False)
+  , ((modMask .|. shiftMask, xK_k), windowSwap U False)
+  , ((modMask .|. shiftMask, xK_l), windowSwap R False)
 
   -- Shrink the master area.
   , ((controlMask .|. modMask , xK_h), sendMessage Shrink)
@@ -323,20 +290,26 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
       , (f, m) <- [(W.view, 0), (W.shift, shiftMask)
       , (\i -> W.view i . W.shift i, shiftMask) -- follow the window to the screen
       ]]
+  -- ++
+  -- [((m .|. modMask, k), windows $ f i)
 
-  ++
+  -- --Keyboard layouts
+  --  | (i, k) <- zip (XMonad.workspaces conf) [xK_1,xK_2,xK_3,xK_4,xK_5,xK_6,xK_7,xK_8,xK_9,xK_0]
+
+  --     , (f, m) <- [(W.greedyView, 0), (W.shift, controlMask)
+  --     , (\i -> W.greedyView i . W.shift i, controlMask) -- follow the window to the screen
+  --     ]] todo ctrl for greedyView
+
+  -- ++
   -- ctrl-shift-{w,e,r}, Move client to screen 1, 2, or 3
   -- [((m .|. controlMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
   --    | (key, sc) <- zip [xK_w, xK_e] [0..]
   --    , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
- [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f)) | (key, sc) <- zip [xK_Left, xK_Right] [0..] , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
-
 
 main :: IO ()
 main = do
 
-    nScreens <- countScreens
 
     dbus <- D.connectSession
     -- Request access to the DBus name
@@ -345,10 +318,7 @@ main = do
 
 -- disableEwmhManageDesktopViewport . as soon as avalible 
 
-    -- docks $
-    xmonad $  ewmhFullscreen . ewmh$
-  --Keyboard layouts
-  --qwerty users use this line
+    xmonad $  ewmhFullscreen . ewmh$ withNavigation2DConfig def $
             myBaseConfig
 
                 {startupHook = myStartupHook

@@ -43,7 +43,7 @@ case $desktop in
        m=$(xrandr --query | grep " connected" | cut -d" " -f1)
        MONITOR=$m polybar --reload mainbar-xmonad-extra -c ~/.config/polybar/config &
      else
-       for m in "DP-1-0.1"; do
+      for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
          MONITOR=$m polybar --reload mainbar-xmonad-extra -c ~/.config/polybar/config &
        done
      fi

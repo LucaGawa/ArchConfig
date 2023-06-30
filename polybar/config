@@ -161,9 +161,9 @@ modules-left = jgmenu ewmh xwindow
 
 [bar/mainbar-xmonad-3]
 inherit = bar/mainbar-xmonad
-modules-left = ewmh
+; modules-left = ewmh xwindow
 
-modules-center = xwindow
+; modules-center = xwindow
 modules-right = 
 
 [bar/mainbar-xmonad-4]

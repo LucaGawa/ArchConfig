@@ -12,6 +12,8 @@ function run {
 #run $HOME/.config/xmonad/scripts/set-screen-resolution-in-virtualbox.sh
 
 # Set display setup
+# xrandr --output eDP-1 --primary --mode 2560x1600 --pos 0x0 --rotate normal --output DP-1 --off --output DP-2 --off --output DP-1-0.1 --off --output HDMI-1-0 --off --output DP-1-0 --off --output DP-1-1 --off
+# sleep 2
 autorandr --change
 
 for id in $(xsetwacom --list devices | sed -n -e 's/^.*id: //p' | cut -c1-2);
