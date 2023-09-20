@@ -49,6 +49,7 @@ picom --config $HOME/.config/xmonad/scripts/picom.conf &
 /usr/lib/xfce4/notifyd/xfce4-notifyd &
 run fusuma -d #gesten 
 run owncloud &
+insync start &
 # run tuxedo-control-center &
 
 #starting user applications at boot time
