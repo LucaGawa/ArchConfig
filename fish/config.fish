@@ -7,8 +7,8 @@ starship init fish | source
 set fish_greeting
 
 ### EXPORT ###
-set -x EDITOR nano 
-set -x VISUAL nano
+set -x EDITOR nvim 
+set -x VISUAL nvim
 set -x HISTCONTROL ignoreboth:erasedups
 set -x PAGER most
 set -x BROWSER brave
@@ -76,7 +76,7 @@ alias fix-pacman-keyserver="/usr/local/bin/arcolinux-fix-pacman-gpg-conf"
 
 alias vim="nvim"
 alias cat="bat"
-alias update="sudo pacman -Syu"
+alias update="paru"
 alias ls="exa"
 alias icat="kitty +kitten icat"
 # alias cd="z"
